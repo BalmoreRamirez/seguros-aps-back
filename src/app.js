@@ -8,6 +8,10 @@ import clubMiembrosRoutes from './routes/clubMiembrosRoutes.js';
 
 const port = process.env.PORT || 3002;
 
+app.get('/', (req, res) => {
+  res.send('Bienvenidos a mi API');
+});
+
 app.use("/api", loginRoutes);
 app.use('/api', clubRoutes);
 app.use('/api', miembroRoutes);
