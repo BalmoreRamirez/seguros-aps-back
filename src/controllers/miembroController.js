@@ -1,23 +1,39 @@
 // src/controllers/miembroController.js
-import miembroService from '../services/miembroService.js';
+import miembroService from "../services/miembroService.js";
+import Club from "../models/Club.js";
 
 const miembroController = {
   async createMiembro(req, res) {
     try {
-      const miembro = await miembroService.createMiembro(req.body);
+      const { clubId, ...miembroData } = req.body;
+      const miembro = await miembroService.createMiembro(miembroData, clubId);
       res.status(201).json(miembro);
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      res.status(500).json({ error: error.message });
     }
   },
+
   async getMiembros(req, res) {
     try {
-      const miembros = await miembroService.getMiembros();
+      const { id } = req.params;
+      // Check if id is an integer
+      if (!Number.isInteger(Number(id))) {
+        return res.status(400).json({ message: "Club ID must be an integer" });
+      }
+
+      // Verify if the club exists
+      const clubExists = await Club.findByPk(id);
+      if (!clubExists) {
+        return res.status(404).json({ message: "Club not found" });
+      }
+
+      const miembros = await miembroService.getMiembros(id);
       res.json(miembros);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   },
+
   async getMiembroById(req, res) {
     try {
       const miembro = await miembroService.getMiembroById(req.params.id);
@@ -41,7 +57,7 @@ const miembroController = {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  },
+  }
 };
 
 export default miembroController;

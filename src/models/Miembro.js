@@ -1,6 +1,6 @@
-// src/models/Miembro.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import Club_miembros from './Club_miembros.js';
 
 const Miembro = sequelize.define('Miembro', {
   nombres: {
@@ -23,8 +23,8 @@ const Miembro = sequelize.define('Miembro', {
   medicamento_receta: {
     type: DataTypes.TEXT,
   },
-  fecha_nacimiento: {
-    type: DataTypes.DATE,
+  edad: {
+    type: DataTypes.INTEGER,
   },
   nombres_responsable: {
     type: DataTypes.STRING,
@@ -42,5 +42,8 @@ const Miembro = sequelize.define('Miembro', {
     type: DataTypes.BOOLEAN,
   },
 });
+
+// Define associations
+Miembro.hasMany(Club_miembros, { foreignKey: 'id_miembro' });
 
 export default Miembro;
