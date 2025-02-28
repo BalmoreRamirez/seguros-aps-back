@@ -20,6 +20,7 @@ app.use('/api', clubMiembrosRoutes);
 sequelize.sync().then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
+    console.log(`MODO: ${process.env.MODE}`);
   });
 }).catch(err => {
   console.error("Unable to connect to the database:", err);

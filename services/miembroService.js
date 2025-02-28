@@ -3,7 +3,7 @@ import Miembro from "../models/Miembro.js";
 import Club_miembros from "../models/Club_miembros.js";
 
 const miembroService = {
-  async createMiembro(data, clubId) {
+  async createMiembro(clubId, data) {
     const miembro = await Miembro.create(data);
     await Club_miembros.create({
       id_club: clubId,

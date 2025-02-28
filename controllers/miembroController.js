@@ -5,8 +5,8 @@ import Club from "../models/Club.js";
 const miembroController = {
   async createMiembro(req, res) {
     try {
-      const { clubId, ...miembroData } = req.body;
-      const miembro = await miembroService.createMiembro(miembroData, clubId);
+      const { club_id, ...miembroData } = req.body;
+      const miembro = await miembroService.createMiembro(club_id, miembroData);
       res.status(201).json(miembro);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -15,8 +15,8 @@ const miembroController = {
 
   async getMiembros(req, res) {
     try {
+
       const { id } = req.params;
-      // Check if id is an integer
       if (!Number.isInteger(Number(id))) {
         return res.status(400).json({ message: "Club ID must be an integer" });
       }

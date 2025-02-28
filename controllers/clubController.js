@@ -1,23 +1,39 @@
 // src/controllers/clubController.js
-import clubService from '../services/clubService.js';
+import clubService from "../services/clubService.js";
 
 const clubController = {
   async createClub(req, res) {
     try {
-      const club = await clubService.createClub(req.body);
+      const { iglesia, distrito, zona, direccion, pastor, loginId } = req.body;
+      const club = await clubService.createClub({ iglesia, distrito, zona, direccion, pastor, loginId });
       res.status(201).json(club);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   },
+
+  /**
+   * Get all clubs by loginId
+   * @param req
+   * @param res
+   * @returns {Promise<*>}
+   */
   async getClubs(req, res) {
     try {
-      const clubs = await clubService.getClubs();
-      res.json(clubs);
+      let estadoButton;
+      const { idrol, idlogin } = req.params;
+      const clubs = await clubService.getClubs(idrol, idlogin);
+       if (clubs.length>=1 && idrol !== 1){
+        estadoButton = false;
+       }else if ((clubs.length>=1 && idrol === 1)||(clubs.length===0 && idrol !== 1)){
+        estadoButton = true;
+       }
+      res.json({ clubs, estadoButton });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   },
+
   async getClubById(req, res) {
     try {
       const club = await clubService.getClubById(req.params.id);
@@ -41,7 +57,7 @@ const clubController = {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  },
+  }
 };
 
 export default clubController;

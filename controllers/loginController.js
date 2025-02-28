@@ -11,10 +11,11 @@ const loginController = {
       res.status(401).json({ message: error.message });
     }
   },
+
   async createUser(req, res) {
     try {
-      const { user, password, rol } = req.body;
-      const newUser = await loginService.createUser(user, password, rol);
+      const { user, password, roleId } = req.body;
+      const newUser = await loginService.createUser(user, password, roleId);
       res.status(201).json(newUser);
     } catch (error) {
       res.status(400).json({ message: error.message });

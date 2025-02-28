@@ -41,6 +41,9 @@ const Miembro = sequelize.define('Miembro', {
   pago_seguro: {
     type: DataTypes.BOOLEAN,
   },
+},{
+  tableName: 'miembros',
+  timestamps: false,
 });
 
 // Define associations
