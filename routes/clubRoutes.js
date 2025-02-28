@@ -1,7 +1,6 @@
-
 import { Router } from "express";
 import clubController from "../controllers/clubController.js";
-import authenticateJWT from "../Middleware/authenticateJWT.js";
+
 
 const router = Router();
 
