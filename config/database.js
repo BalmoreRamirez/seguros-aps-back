@@ -8,4 +8,3 @@ let sequelize;
     port: process.env.DB_PORT_DEV
   });
 export default sequelize;
-
