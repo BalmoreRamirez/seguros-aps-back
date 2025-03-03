@@ -1,11 +1,15 @@
-// src/controllers/clubController.js
 import clubService from "../services/clubService.js";
-
 const clubController = {
+  /**
+   * Create a new club
+   * @param req
+   * @param res
+   * @returns {Promise<*>}
+   */
   async createClub(req, res) {
     try {
-      const { iglesia, distrito, zona, direccion, pastor, loginId } = req.body;
-      const club = await clubService.createClub({ iglesia, distrito, zona, direccion, pastor, loginId });
+      const { nombre, iglesia, distrito, zona, pastor, id_usuario } = req.body;
+      const club = await clubService.createClub({ nombre, iglesia, distrito, zona, pastor, id_usuario });
       res.status(201).json(club);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -20,15 +24,9 @@ const clubController = {
    */
   async getClubs(req, res) {
     try {
-      let estadoButton;
       const { idrol, idlogin } = req.params;
       const clubs = await clubService.getClubs(idrol, idlogin);
-       if (clubs.length>=1 && idrol !== 1){
-        estadoButton = false;
-       }else if ((clubs.length>=1 && idrol === 1)||(clubs.length===0 && idrol !== 1)){
-        estadoButton = true;
-       }
-      res.json({ clubs, estadoButton });
+      res.json( clubs);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -36,7 +34,8 @@ const clubController = {
 
   async getClubById(req, res) {
     try {
-      const club = await clubService.getClubById(req.params.id);
+      const { id } = req.params;
+      const club = await clubService.getClubById(id);
       res.json(club);
     } catch (error) {
       res.status(400).json({ message: error.message });

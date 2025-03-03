@@ -1,12 +1,14 @@
 // src/controllers/miembroController.js
 import miembroService from "../services/miembroService.js";
 import Club from "../models/Club.js";
+import MiembroService from "../services/miembroService.js";
+import Miembro from "../models/Miembro.js";
 
 const miembroController = {
   async createMiembro(req, res) {
     try {
-      const { club_id, ...miembroData } = req.body;
-      const miembro = await miembroService.createMiembro(club_id, miembroData);
+      const { id_club, ...miembroData } = req.body;
+      const miembro = await miembroService.createMiembro(id_club, miembroData);
       res.status(201).json(miembro);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -36,7 +38,15 @@ const miembroController = {
 
   async getMiembroById(req, res) {
     try {
-      const miembro = await miembroService.getMiembroById(req.params.id);
+      const { id } = req.params;
+      if (!Number.isInteger(Number(id))) {
+        return res.status(400).json({ message: "Club ID must be an integer" });
+      }
+      const miembroExists = await Miembro.findByPk(id);
+      if (!miembroExists) {
+        return res.status(404).json({ message: "Club not found" });
+      }
+      const miembro = await miembroService.getMiembroById(id);
       res.json(miembro);
     } catch (error) {
       res.status(400).json({ message: error.message });

@@ -1,9 +1,25 @@
 // src/services/clubService.js
 import Club from "../models/Club.js";
+import Usuario from "../models/Usuario.js";
 
 const clubService = {
   async createClub(data) {
-    return await Club.create(data);
+   try {
+     const { nombre, iglesia, distrito, zona, pastor, id_usuario } = data;
+     const usuario = await Usuario.findByPk(id_usuario);
+     const response = await Club.create({
+       nombre,
+       iglesia,
+       distrito,
+       zona,
+       pastor,
+       id_usuario: id_usuario
+     });
+     await usuario.update({complete_club: true});
+     return response;
+   }catch (e) {
+     console.error('Error en create Club', e);
+   }
   },
   /**
    * Get all clubs by loginId
@@ -19,7 +35,7 @@ const clubService = {
         return await Club.findAll();
       } else {
         return await Club.findAll({
-          where: { loginId: id_login }
+          where: { id_usuario: id_login }
         });
       }
     } catch (e) {

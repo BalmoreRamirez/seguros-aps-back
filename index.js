@@ -1,6 +1,6 @@
 import app from "./config/server.js";
 import sequelize from "./config/database.js";
-import loginRoutes from "./routes/loginRoutes.js";
+import loginRoutes from "./routes/UsuarioRoutes.js";
 import clubRoutes from './routes/clubRoutes.js';
 import miembroRoutes from './routes/miembroRoutes.js';
 import clubMiembrosRoutes from './routes/clubMiembrosRoutes.js';
