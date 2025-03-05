@@ -9,5 +9,6 @@ router.get('/miembros/:id', miembroController.getMiembros);
 router.get('/miembro/:id', miembroController.getMiembroById);
 router.put('/miembros/:id', miembroController.updateMiembro);
 router.delete('/miembros/:id', miembroController.deleteMiembro);
+router.put('/updateMiembros', miembroController.updatePagoSeguro);
 
 export default router;

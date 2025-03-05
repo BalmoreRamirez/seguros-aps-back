@@ -67,6 +67,15 @@ const miembroController = {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
+  },
+  async updatePagoSeguro(req, res) {
+    try {
+      const { id_club, id_miembros } = req.body;
+      const result = await miembroService.updatePagoSeguro(id_club, id_miembros);
+      res.status(200).json({ message: "Pago seguro actualizado correctamente", result });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 

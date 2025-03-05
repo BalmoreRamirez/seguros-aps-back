@@ -49,6 +49,30 @@ const miembroService = {
   },
   async deleteMiembro(id) {
     return await Miembro.destroy({ where: { id } });
+  },
+  async updatePagoSeguro(id_club, id_miembros) {
+    try {
+      const members = await Club_miembros.findAll({
+        where: {
+          id_club,
+          id_miembro: id_miembros
+        }
+      });
+      if (members.length !== id_miembros.length) {
+        throw new Error("Algunos miembros no pertenecen al club especificado");
+      }
+      return await Miembro.update(
+        { pago_seguro: true },
+        {
+          where: {
+            id: id_miembros
+          }
+        }
+      );
+    } catch (e) {
+      console.error("Error al actualizar estados", e);
+      throw e;
+    }
   }
 };
 
