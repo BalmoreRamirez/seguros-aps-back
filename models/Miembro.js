@@ -53,7 +53,8 @@ const Miembro = sequelize.define("Miembro", {
     type: DataTypes.STRING(50)
   },
   pago_seguro: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   }
 }, {
   tableName: "miembros",
