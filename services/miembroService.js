@@ -11,8 +11,12 @@ const miembroService = {
       if (!clubExists) {
         throw new Error("Club not found");
       }
+      const dataInfo = {
+        pago_seguro: false,
+        ...data
+      };
 
-      const miembro = await Miembro.create(data);
+      const miembro = await Miembro.create(dataInfo);
       await Club_miembros.create({
         id_club: id_club,
         id_miembro: miembro.id
