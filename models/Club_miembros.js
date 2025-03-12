@@ -1,32 +1,32 @@
 // src/models/Club_miembros.js
-import { DataTypes } from "sequelize";
-import sequelize from "../config/database.js";
+import { DataTypes } from 'sequelize';
+import sequelize from '../config/database.js';
 
-const Club_miembros = sequelize.define("Club_miembros", {
+const Club_miembros = sequelize.define('Club_miembros', {
   id: {
     autoIncrement: true,
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
   },
   id_club: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "clubs",
-      key: "id"
+      model: 'clubs',
+      key: 'id',
     },
-    onDelete: "CASCADE"
+    onDelete: 'CASCADE',
   },
   id_miembro: {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: "miembros",
-      key: "id"
+      model: 'miembros',
+      key: 'id',
     },
-    onDelete: "CASCADE"
-  }
+    onDelete: 'CASCADE',
+  },
 });
 
 export default Club_miembros;

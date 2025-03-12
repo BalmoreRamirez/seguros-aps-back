@@ -1,4 +1,3 @@
-
 import clubMiembrosService from '../services/clubMiembrosService.js';
 
 const clubMiembrosController = {
@@ -20,7 +19,9 @@ const clubMiembrosController = {
   },
   async getClubMiembroById(req, res) {
     try {
-      const clubMiembro = await clubMiembrosService.getClubMiembroById(req.params.id);
+      const clubMiembro = await clubMiembrosService.getClubMiembroById(
+        req.params.id,
+      );
       res.json(clubMiembro);
     } catch (error) {
       res.status(400).json({ message: error.message });

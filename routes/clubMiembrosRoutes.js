@@ -7,6 +7,9 @@ const router = Router();
 router.post('/club-miembros', clubMiembrosController.addMiembroToClub);
 router.get('/club-miembros', clubMiembrosController.getClubMiembros);
 router.get('/club-miembros/:id', clubMiembrosController.getClubMiembroById);
-router.delete('/club-miembros/:id', clubMiembrosController.removeMiembroFromClub);
+router.delete(
+  '/club-miembros/:id',
+  clubMiembrosController.removeMiembroFromClub,
+);
 
 export default router;

@@ -1,5 +1,5 @@
 // src/controllers/UsuarioRoutes.js
-import usuarioService from "../services/UsuarioService.js";
+import usuarioService from '../services/UsuarioService.js';
 
 const usuarioController = {
   async login(req, res) {
@@ -20,13 +20,13 @@ const usuarioController = {
         password,
         is_admin,
         complete_club,
-        id_role
+        id_role,
       );
       res.status(201).json(newUser);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  }
+  },
 };
 
 export default usuarioController;

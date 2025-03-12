@@ -1,8 +1,7 @@
 // src/controllers/miembroController.js
-import miembroService from "../services/miembroService.js";
-import Club from "../models/Club.js";
-import MiembroService from "../services/miembroService.js";
-import Miembro from "../models/Miembro.js";
+import miembroService from '../services/miembroService.js';
+import Club from '../models/Club.js';
+import Miembro from '../models/Miembro.js';
 
 const miembroController = {
   async createMiembro(req, res) {
@@ -17,16 +16,15 @@ const miembroController = {
 
   async getMiembros(req, res) {
     try {
-
       const { id } = req.params;
       if (!Number.isInteger(Number(id))) {
-        return res.status(400).json({ message: "Club ID must be an integer" });
+        return res.status(400).json({ message: 'Club ID must be an integer' });
       }
 
       // Verify if the club exists
       const clubExists = await Club.findByPk(id);
       if (!clubExists) {
-        return res.status(404).json({ message: "Club not found" });
+        return res.status(404).json({ message: 'Club not found' });
       }
 
       const miembros = await miembroService.getMiembros(id);
@@ -40,11 +38,11 @@ const miembroController = {
     try {
       const { id } = req.params;
       if (!Number.isInteger(Number(id))) {
-        return res.status(400).json({ message: "Club ID must be an integer" });
+        return res.status(400).json({ message: 'Club ID must be an integer' });
       }
       const miembroExists = await Miembro.findByPk(id);
       if (!miembroExists) {
-        return res.status(404).json({ message: "Club not found" });
+        return res.status(404).json({ message: 'Club not found' });
       }
       const miembro = await miembroService.getMiembroById(id);
       res.json(miembro);
@@ -52,10 +50,20 @@ const miembroController = {
       res.status(400).json({ message: error.message });
     }
   },
+
+  /**
+   * Update a miembro
+   * @param req
+   * @param res
+   * @returns {Promise<void>}
+   */
   async updateMiembro(req, res) {
     try {
-      await miembroService.updateMiembro(req.params.id, req.body);
-      res.status(204).end();
+      const response = await miembroService.updateMiembro(
+        req.params.id,
+        req.body,
+      );
+      res.json(response);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -63,7 +71,7 @@ const miembroController = {
   async deleteMiembro(req, res) {
     try {
       await miembroService.deleteMiembro(req.params.id);
-      res.status(204).end();
+      res.json({ message: 'Miembro eliminado con éxito' });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -71,12 +79,17 @@ const miembroController = {
   async updatePagoSeguro(req, res) {
     try {
       const { id_club, id_miembros } = req.body;
-      const result = await miembroService.updatePagoSeguro(id_club, id_miembros);
-      res.status(200).json({ message: "Pago seguro actualizado correctamente", result });
+      const result = await miembroService.updatePagoSeguro(
+        id_club,
+        id_miembros,
+      );
+      res
+        .status(200)
+        .json({ message: 'Pago seguro actualizado correctamente', result });
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
-  }
+  },
 };
 
 export default miembroController;

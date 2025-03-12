@@ -1,4 +1,5 @@
-import clubService from "../services/clubService.js";
+import clubService from '../services/clubService.js';
+
 const clubController = {
   /**
    * Create a new club
@@ -9,7 +10,14 @@ const clubController = {
   async createClub(req, res) {
     try {
       const { nombre, iglesia, distrito, zona, pastor, id_usuario } = req.body;
-      const club = await clubService.createClub({ nombre, iglesia, distrito, zona, pastor, id_usuario });
+      const club = await clubService.createClub({
+        nombre,
+        iglesia,
+        distrito,
+        zona,
+        pastor,
+        id_usuario,
+      });
       res.status(201).json(club);
     } catch (error) {
       res.status(400).json({ message: error.message });
@@ -26,7 +34,7 @@ const clubController = {
     try {
       const { idrol, idlogin } = req.params;
       const clubs = await clubService.getClubs(idrol, idlogin);
-      res.json( clubs);
+      res.json(clubs);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
@@ -44,19 +52,21 @@ const clubController = {
   async updateClub(req, res) {
     try {
       await clubService.updateClub(req.params.id, req.body);
-      res.status(204).end();
+      res.json({ message: 'Club actualizado' });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   },
   async deleteClub(req, res) {
     try {
-      await clubService.deleteClub(req.params.id);
-      res.status(204).end();
+      const club = await clubService.getClubById(req.params.id);
+      const newEstado = !club.estado;
+      await clubService.updateClub(req.params.id, { estado: newEstado });
+      res.json({ ...club.toJSON(), estado: newEstado });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  }
+  },
 };
 
 export default clubController;
