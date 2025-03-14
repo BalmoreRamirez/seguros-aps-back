@@ -65,7 +65,9 @@ const Miembro = sequelize.define(
   },
 );
 
-// Define associations
-Miembro.hasMany(Club_miembros, { foreignKey: 'id_miembro' });
+(async () => {
+  const Club_miembros = (await import('./Club_miembros.js')).default;
+  Miembro.hasMany(Club_miembros, { foreignKey: 'id_miembro' });
+})();
 
 export default Miembro;

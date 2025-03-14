@@ -1,6 +1,6 @@
-// src/models/Club_miembros.js
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
+import Miembro from './Miembro.js';
 
 const Club_miembros = sequelize.define('Club_miembros', {
   id: {
@@ -28,5 +28,5 @@ const Club_miembros = sequelize.define('Club_miembros', {
     onDelete: 'CASCADE',
   },
 });
-
+Club_miembros.belongsTo(Miembro, { foreignKey: 'id_miembro' });
 export default Club_miembros;
