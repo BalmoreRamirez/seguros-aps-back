@@ -73,8 +73,48 @@ const clubService = {
   async updateClub(id, data) {
     return await Club.update(data, { where: { id } });
   },
-  async deleteClub(id) {
-    return await Club.update({ estado: false }, { where: { id: id } });
+  async reporteGeneral() {
+    try {
+      const clubs = await Club.findAll({
+        include: [
+          {
+            model: club_miembros,
+            include: [
+              {
+                model: Miembro,
+                attributes: [
+                  'primer_nombre',
+                  'segundo_nombre',
+                  'primer_apellido',
+                  'segundo_apellido',
+                  'pago_seguro',
+                ],
+              },
+            ],
+          },
+        ],
+      });
+
+      const reporte = clubs.map((club) => {
+        return {
+          club: club.nombre,
+          miembros: club.Club_miembros.map((cm) => {
+            return {
+              primer_nombre: cm.Miembro.primer_nombre,
+              segundo_nombre: cm.Miembro.segundo_nombre,
+              primer_apellido: cm.Miembro.primer_apellido,
+              segundo_apellido: cm.Miembro.segundo_apellido,
+              pago_seguro: cm.Miembro.pago_seguro,
+            };
+          }),
+        };
+      });
+
+      return reporte;
+    } catch (e) {
+      console.log(e);
+      throw new Error('Error generating report');
+    }
   },
 };
 

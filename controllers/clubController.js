@@ -67,6 +67,14 @@ const clubController = {
       res.status(400).json({ message: error.message });
     }
   },
+  async reporteGeneral(req, res) {
+    try {
+      const reporte = await clubService.reporteGeneral();
+      res.json(reporte);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
 };
 
 export default clubController;

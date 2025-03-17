@@ -2,6 +2,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 import Usuario from './Usuario.js';
+import Club_miembros from "./Club_miembros.js";
 
 const Club = sequelize.define(
   'Club',
@@ -53,6 +54,6 @@ const Club = sequelize.define(
     timestamps: false,
   },
 );
-Club.belongsTo(Usuario, { foreignKey: 'id_usuario' });
-
+//Club.belongsTo(Usuario, { foreignKey: 'id_usuario' });
+Club.hasMany(Club_miembros, { foreignKey: 'id_club' });
 export default Club;
