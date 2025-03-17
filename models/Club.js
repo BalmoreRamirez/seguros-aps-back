@@ -2,7 +2,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 import Usuario from './Usuario.js';
-import Club_miembros from "./Club_miembros.js";
+import Club_miembros from './Club_miembros.js';
 
 const Club = sequelize.define(
   'Club',
