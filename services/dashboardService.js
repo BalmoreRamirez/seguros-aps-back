@@ -63,6 +63,9 @@ const dashboardService = {
     };
 
     miembros.forEach((miembro) => {
+      if (!miembro.tipo) {
+        return; // Si no tiene tipo, ignorar
+      }
       const tipo = miembro.tipo.toLowerCase();
       let categoria;
 
