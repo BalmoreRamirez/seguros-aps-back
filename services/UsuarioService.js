@@ -35,6 +35,15 @@ const usuarioService = {
   },
 
   async createUser(user, password, is_admin, complete_club, id_role) {
+    // Verificar si el usuario ya existe
+    const existingUser = await Usuario.findOne({ where: { user } });
+    if (existingUser) {
+      throw new Error(
+        'El nombre de usuario ya está en uso. Por favor elija otro.',
+      );
+    }
+
+    // Si no existe, proceder a crear el usuario
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = await Usuario.create({
       user,
@@ -49,6 +58,21 @@ const usuarioService = {
     return await Usuario.findAll({
       where: { is_admin: false, id_role: 2 },
     });
+  },
+  async cambiarPassword(userId, newPassword) {
+    // Verificar que el usuario existe
+    const usuario = await Usuario.findByPk(userId);
+    if (!usuario) {
+      throw new Error('Usuario no encontrado');
+    }
+
+    // Hash de la nueva contraseña
+    const hashedPassword = bcrypt.hashSync(newPassword, 10);
+
+    // Actualizar la contraseña
+    await usuario.update({ password: hashedPassword });
+
+    return { message: 'Contraseña actualizada correctamente' };
   },
 };
 

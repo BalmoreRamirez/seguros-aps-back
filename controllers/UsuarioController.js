@@ -35,6 +35,25 @@ const usuarioController = {
       res.status(500).json({ message: error.message });
     }
   },
+  async cambiarPassword(req, res) {
+    try {
+      const { userId, newPassword } = req.body;
+
+      if (!userId || !newPassword) {
+        return res
+          .status(400)
+          .json({ message: 'Se requiere ID de usuario y nueva contraseña' });
+      }
+
+      const resultado = await usuarioService.cambiarPassword(
+        userId,
+        newPassword,
+      );
+      res.json(resultado);
+    } catch (error) {
+      res.status(400).json({ message: error.message });
+    }
+  },
 };
 
 export default usuarioController;
