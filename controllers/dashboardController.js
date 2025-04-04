@@ -7,7 +7,9 @@ const dashboardController = {
       const { id } = req.params;
 
       if (!Number.isInteger(Number(id))) {
-        return res.status(400).json({ message: 'El ID del club debe ser un número entero' });
+        return res
+          .status(400)
+          .json({ message: 'El ID del club debe ser un número entero' });
       }
 
       const estadisticas = await dashboardService.getEstadisticasPorClub(id);
@@ -24,7 +26,7 @@ const dashboardController = {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  }
+  },
 };
 
 export default dashboardController;

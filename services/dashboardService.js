@@ -2,7 +2,6 @@
 import Miembro from '../models/Miembro.js';
 import Club_miembros from '../models/Club_miembros.js';
 import Club from '../models/Club.js';
-import { Op } from 'sequelize';
 
 const dashboardService = {
   async getEstadisticasPorClub(clubId) {
