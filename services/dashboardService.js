@@ -59,13 +59,29 @@ const dashboardService = {
       conquistador: { total: 0, conSeguro: 0, sinSeguro: 0 },
       guiaMayor: { total: 0, conSeguro: 0, sinSeguro: 0 },
       ja: { total: 0, conSeguro: 0, sinSeguro: 0 },
+      consejero: { total: 0, conSeguro: 0, sinSeguro: 0 }, // Nueva categoría
+      noAsignado: { total: 0, conSeguro: 0, sinSeguro: 0 },
       total: { total: 0, conSeguro: 0, sinSeguro: 0 },
     };
 
     miembros.forEach((miembro) => {
-      if (!miembro.tipo) {
-        return; // Si no tiene tipo, ignorar
+      // Verificar que miembro y miembro.tipo existen
+      if (!miembro || !miembro.tipo) {
+        // Contar como "no asignado" si no tiene tipo
+        estadisticas.noAsignado.total++;
+        estadisticas.total.total++;
+
+        // Verificar el pago de seguro aunque no tenga tipo asignado
+        if (miembro && miembro.pago_seguro) {
+          estadisticas.noAsignado.conSeguro++;
+          estadisticas.total.conSeguro++;
+        } else {
+          estadisticas.noAsignado.sinSeguro++;
+          estadisticas.total.sinSeguro++;
+        }
+        return;
       }
+
       const tipo = miembro.tipo.toLowerCase();
       let categoria;
 
@@ -77,8 +93,11 @@ const dashboardService = {
         categoria = 'guiaMayor';
       } else if (tipo.includes('ja')) {
         categoria = 'ja';
+      } else if (tipo.includes('consejero')) {
+        // Añadir detección del nuevo tipo
+        categoria = 'consejero';
       } else {
-        return; // Si no coincide con ninguna categoría conocida
+        categoria = 'noAsignado';
       }
 
       // Incrementar contadores
