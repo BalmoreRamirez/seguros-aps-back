@@ -71,7 +71,8 @@ const clubService = {
     return await Club.findByPk(id);
   },
   async updateClub(id, data) {
-    return await Club.update(data, { where: { id } });
+    let id_club = parseInt(id);
+    return await Club.update(data, { where: { id: id_club } });
   },
   async reporteGeneral() {
     try {

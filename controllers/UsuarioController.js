@@ -27,6 +27,14 @@ const usuarioController = {
       res.status(400).json({ message: error.message });
     }
   },
+  async getAllUserManager(req, res) {
+    try {
+      const users = await usuarioService.getAllUserManager();
+      res.json(users);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  },
 };
 
 export default usuarioController;

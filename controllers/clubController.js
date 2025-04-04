@@ -49,15 +49,16 @@ const clubController = {
       res.status(400).json({ message: error.message });
     }
   },
-  async updateClub(req, res) {
+  async updateDataClub(req, res) {
     try {
-      await clubService.updateClub(req.params.id, req.body);
+      const id_club = parseInt(req.params.id);
+      await clubService.updateClub(id_club, req.body);
       res.json({ message: 'Club actualizado' });
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
   },
-  async deleteClub(req, res) {
+  async UpdateStatusClub(req, res) {
     try {
       const club = await clubService.getClubById(req.params.id);
       const newEstado = !club.estado;

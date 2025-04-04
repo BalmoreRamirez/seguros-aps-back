@@ -4,6 +4,7 @@ import loginRoutes from './routes/UsuarioRoutes.js';
 import clubRoutes from './routes/clubRoutes.js';
 import miembroRoutes from './routes/miembroRoutes.js';
 import clubMiembrosRoutes from './routes/clubMiembrosRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 
 const port = process.env.PORT || 3002;
 
@@ -15,6 +16,7 @@ app.use('/api', loginRoutes);
 app.use('/api', clubRoutes);
 app.use('/api', miembroRoutes);
 app.use('/api', clubMiembrosRoutes);
+app.use('/api', dashboardRoutes);
 
 sequelize
   .sync()

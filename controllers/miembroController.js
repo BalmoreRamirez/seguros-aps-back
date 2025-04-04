@@ -51,12 +51,6 @@ const miembroController = {
     }
   },
 
-  /**
-   * Update a miembro
-   * @param req
-   * @param res
-   * @returns {Promise<void>}
-   */
   async updateMiembro(req, res) {
     try {
       const response = await miembroService.updateMiembro(
@@ -68,6 +62,7 @@ const miembroController = {
       res.status(400).json({ message: error.message });
     }
   },
+
   async deleteMiembro(req, res) {
     try {
       await miembroService.deleteMiembro(req.params.id);
@@ -76,6 +71,7 @@ const miembroController = {
       res.status(400).json({ message: error.message });
     }
   },
+
   async updatePagoSeguro(req, res) {
     try {
       const { id_club, id_miembros } = req.body;

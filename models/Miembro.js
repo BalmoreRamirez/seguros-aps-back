@@ -57,6 +57,10 @@ const Miembro = sequelize.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    tipo: {
+      type: DataTypes.STRING(50),
+      allowNull: true,
+    },
   },
   {
     tableName: 'miembros',

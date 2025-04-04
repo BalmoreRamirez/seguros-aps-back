@@ -45,6 +45,11 @@ const usuarioService = {
     });
     return newUser;
   },
+  async getAllUserManager() {
+    return await Usuario.findAll({
+      where: { is_admin: false, id_role: 2 },
+    });
+  },
 };
 
 export default usuarioService;

@@ -42,9 +42,23 @@ const miembroService = {
       id: miembro.id,
       nombres: `${miembro.primer_nombre} ${miembro.segundo_nombre}`,
       apellidos: `${miembro.primer_apellido} ${miembro.segundo_apellido}`,
+      primer_nombre: miembro.primer_nombre,
+      segundo_nombre: miembro.segundo_nombre,
+      primer_apellido: miembro.primer_apellido,
+      segundo_apellido: miembro.segundo_apellido,
       edad: miembro.edad,
       telefono: miembro.telefono,
       seguro: miembro.pago_seguro,
+      enfermedad_padese: miembro.enfermedad_padese,
+      medicamento_receta: miembro.medicamento_receta,
+      is_alergico_a: miembro.is_alergico_a,
+      nombres_responsable: miembro.nombres_responsable,
+      apellidos_responsable: `${miembro.apellidos_responsable}`,
+      telefono_responsable: miembro.telefono_responsable,
+      parentesco_responsable: miembro.parentesco_responsable,
+      tipo: {
+        nombre: miembro.tipo,
+      },
     }));
   },
   async getMiembroById(id) {
